@@ -11,7 +11,7 @@ import static com.codeborne.selenide.Selenide.open;
 import static io.qameta.allure.Allure.step;
 import static org.openqa.selenium.By.linkText;
 
-public class AllureTest {
+public class AllureTest extends TestBase {
     static final String URL = "https://github.com";
     static final String REPOSITORY = "ApocalipticLove/HW7";
     static final int ISSUE = 1;

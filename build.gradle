@@ -6,10 +6,6 @@ plugins {
 group 'guru.qa'
 version '1.0-SNAPSHOT'
 
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
-}
-
 allure {
     report {
         version.set("2.19.0")
@@ -28,13 +24,28 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-    testImplementation (
-            'org.junit.jupiter:junit-jupiter:5.8.1',
-            'com.codeborne:selenide:6.9.0',
-            'io.qameta.allure:allure-selenide:2.19.0')
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
 }
 
-test {
+dependencies {
+    testImplementation(
+            'org.junit.jupiter:junit-jupiter-api:5.9.0',
+            'com.codeborne:selenide:6.7.2',
+            'org.aeonbits.owner:owner:1.0.4',
+            'io.qameta.allure:allure-selenide:2.20.1'
+    )
+
+    testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.9.0')
+}
+tasks.withType(Test) {
+    systemProperties(System.getProperties())
     useJUnitPlatform()
+
+    testLogging {
+        lifecycle {
+            events "started", "skipped", "failed", "standard_error", "standard_out"
+            exceptionFormat "short"
+        }
+    }
 }
